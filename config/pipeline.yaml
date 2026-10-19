@@ -1,0 +1,45 @@
+# Source candidates only; no downloads or curation are implemented.
+dataset:
+  id: "GDSC_MATRIX"
+  name: "GDSC Matrix"
+  version: null  # Set after selecting the source releases.
+source_review:
+  status: pending
+  notes: "Review the five well-statistics CSVs, viability scale and source versus independently recomputed synergy. The legacy script borrows molecular profiles/metadata from GDSC2.rds; select raw sources for these components."
+annotationdb:
+  base_url: https://annotationdb.bhklab.ca
+software:
+  github:
+    - package: CoreGx
+      repo: bhklab/CoreGx
+      ref: HEAD
+    - package: PharmacoGx
+      repo: bhklab/PharmacoGx
+      ref: HEAD
+sources:
+  - id: "screen"
+    name: "GDSC 7x7 matrix well statistics"
+    release: "Figshare article 25266697 v2"
+    landing_url: "https://figshare.com/articles/dataset/25266697"
+    download_url: "https://ndownloader.figshare.com/files/45451363"
+    filename: "matrix_well_stats_GDSC_007_010_plus_Spiper1.zip"
+    format: "ZIP containing five CSV files"
+    review_status: "pending"
+    note: "Direct URL recovered from existing local Figshare metadata; revalidate version, checksum and raw-versus-preprocessed status."
+    sha256: null  # Record after source verification.
+  - id: "molecular_metadata"
+    name: "GDSC raw molecular data and metadata"
+    release: null
+    landing_url: null
+    download_url: null
+    filename: null
+    format: "To be selected"
+    review_status: "pending"
+    note: "Required source decision: replace the legacy prebuilt GDSC2 PSet with raw sources."
+    sha256: null  # Record after source verification.
+parameters:
+  normalization: null
+  fitting: null  # Choose model, metrics and replicate handling after source review.
+outputs:
+  pharmacoset: "data/results/GDSC_MATRIX_PSet.rds"
+  tables: data/results/tables
