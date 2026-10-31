@@ -1,5 +1,8 @@
-# End-user outputs
+# Results
 
-Expected after implementation: `GDSC_MATRIX_PSet.rds`, `tables/*.tsv`, and optional `tables.tar.gz`. No logs or debugging outputs.
+Expected files: `GDSC_MATRIX_PSet.rds`, `tables/*.tsv`, and optional `tables.tar.gz`.
 
-Approximate legacy sizes: Legacy matrix archive about 241 MB; extracted CSVs about 2.15 GB; legacy final PSet about 661 MB.
+
+`tables/sensitivity.tsv` preserves physical source wells; `tables/synergy.tsv` holds derived dose-context measurements.
+
+The complete object is validated and explored in `docs/pset_qc.html` after assembly. Lightweight integration fixtures are internal tests only.

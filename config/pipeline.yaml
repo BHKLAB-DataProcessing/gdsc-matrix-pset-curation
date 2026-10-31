@@ -1,45 +1,63 @@
-# Source candidates only; no downloads or curation are implemented.
+---
 dataset:
-  id: "GDSC_MATRIX"
-  name: "GDSC Matrix"
-  version: null  # Set after selecting the source releases.
-source_review:
-  status: pending
-  notes: "Review the five well-statistics CSVs, viability scale and source versus independently recomputed synergy. The legacy script borrows molecular profiles/metadata from GDSC2.rds; select raw sources for these components."
+  id: GDSC_MATRIX
+  name: GDSC Matrix
+  version: '2026-10-27'
 annotationdb:
+  mode: live
+  refresh: false
   base_url: https://annotationdb.bhklab.ca
-software:
-  github:
-    - package: CoreGx
-      repo: bhklab/CoreGx
-      ref: HEAD
-    - package: PharmacoGx
-      repo: bhklab/PharmacoGx
-      ref: HEAD
+packages:
+  CoreGx: https://github.com/bhklab/CoreGx/commit/bf6d814abd3dc0fc98f9f419f430cc6473046cb2
+  PharmacoGx: https://github.com/bhklab/PharmacoGx/commit/28c58707eece80086bee75d8ef0e8afae96389ca
 sources:
-  - id: "screen"
-    name: "GDSC 7x7 matrix well statistics"
-    release: "Figshare article 25266697 v2"
-    landing_url: "https://figshare.com/articles/dataset/25266697"
-    download_url: "https://ndownloader.figshare.com/files/45451363"
-    filename: "matrix_well_stats_GDSC_007_010_plus_Spiper1.zip"
-    format: "ZIP containing five CSV files"
-    review_status: "pending"
-    note: "Direct URL recovered from existing local Figshare metadata; revalidate version, checksum and raw-versus-preprocessed status."
-    sha256: null  # Record after source verification.
-  - id: "molecular_metadata"
-    name: "GDSC raw molecular data and metadata"
-    release: null
-    landing_url: null
-    download_url: null
-    filename: null
-    format: "To be selected"
-    review_status: "pending"
-    note: "Required source decision: replace the legacy prebuilt GDSC2 PSet with raw sources."
-    sha256: null  # Record after source verification.
+- id: gdsc-007_summary
+  download_url: https://gdsc-combinations.depmap.sanger.ac.uk/downloads/gdsc-007/matrix_results
+  content_sha256: e80a4260a3c012578737ec04acd73343fa639c0c8b8120cee3353cf145518d57
+- id: gdsc-008_summary
+  download_url: https://gdsc-combinations.depmap.sanger.ac.uk/downloads/gdsc-008/matrix_results
+  content_sha256: f8467e3d6248643ad78b689d1ea316ae818d14e34d751e733d209ea4e0039eee
+- id: gdsc-009_summary
+  download_url: https://gdsc-combinations.depmap.sanger.ac.uk/downloads/gdsc-009/matrix_results
+  content_sha256: b59f79ec88889db39d50ce3ff1b1e2002fe4df103402736635769970f61aad4a
+- id: gdsc-010_summary
+  download_url: https://gdsc-combinations.depmap.sanger.ac.uk/downloads/gdsc-010/matrix_results
+  content_sha256: 945a69b975d10b523c2f77b93a1ce291bbf8ddbdced691aac4b049e64c13deba
+- id: sandpiper-01_summary
+  download_url: https://gdsc-combinations.depmap.sanger.ac.uk/downloads/sandpiper-01/matrix_results
+  content_sha256: 51a892a69400efc924cf66dfcd4e79d1e4779428b4543c62eef57ba8fe56f049
+- id: matrix_well_stats
+  download_url: https://ndownloader.figshare.com/files/45451363
+  sha256: e8cb50f6ce860fa17586a555130cb3b019f6011ed1976c0f0d3e00fb072d3259
+- id: gencode
+  download_url: https://storage.googleapis.com/annotationdb_pipeline_outputs/annotation_assets/gencode.v50.annotation.gtf.gz
+  sha256: 83fba3e9b03f0b8c958f3595c6c350adc55f468abf8b0e47b6d5284cfe13a453
+- id: cellosaurus
+  download_url: https://annotationdb.bhklab.ca/cell_line/all
+- id: cmp_models
+  download_url: https://cog.sanger.ac.uk/cmp/download/model_list_latest.csv.gz
+  sha256: 333affaa690c9f7e517467a6f78b00ffb418cb8449e2eb1cc5d93d85f7b0862e
+- id: cmp_genes
+  download_url: https://cog.sanger.ac.uk/cmp/download/gene_identifiers_latest.csv.gz
+  sha256: 14b6c26a7fbb5d60f3b9bdccf12582a0d306b9afd57534a6f0e40defbb601dc1
+- id: rnaseq
+  download_url: https://cog.sanger.ac.uk/cmp/download/rnaseq_all_20220624.zip
+  sha256: 2af6fd33a16c5c3d48a8d78976f54b4a09fcf0bac4102317b621f24d7bdca39a
+- id: cnv
+  download_url: https://cog.sanger.ac.uk/cmp/download/WES_pureCN_CNV_genes_20221213.zip
+  sha256: 21b749fc2a078a61cf407bf22b15ae32120c2852cb86fbbaa7a1e748ff9ff545
+- id: mutations
+  download_url: https://cog.sanger.ac.uk/cmp/download/mutations_all_20230202.zip
+  sha256: bcd4a11690ed308706cc507377f8af2cc7abd2612fdf050c99ebd75631af58cb
+- id: fusions
+  download_url: https://cog.sanger.ac.uk/cmp/download/Fusions_20230725.zip
+  sha256: 2491d870b82226410cfc59c147f0442420dffc437e4d580a9cd6cf5477e166d7
 parameters:
-  normalization: null
-  fitting: null  # Choose model, metrics and replicate handling after source review.
+  fitting:
+    engine: PharmacoGx_Hill
+    min_points: 3
+    workers: 2
+    chunk_size: 500
 outputs:
-  pharmacoset: "data/results/GDSC_MATRIX_PSet.rds"
+  pharmacoset: data/results/GDSC_MATRIX_PSet.rds
   tables: data/results/tables
